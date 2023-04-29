@@ -20,7 +20,7 @@ public class Spot {
     private ParkingLot parkingLot;
 
     @OneToMany(mappedBy = "spot",cascade = CascadeType.ALL)
-    List<Reservation> reservationList = new ArrayList<>();
+    List<Reservation> reservationList;
 
     public Spot() {
     }

@@ -9,6 +9,7 @@ import com.driver.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,8 +74,20 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setNumberOfHours(timeInHours);
         reservation.setSpot(spotReq);
 
-        user.getReservationList().add(reservation);
-        spotReq.getReservationList().add(reservation);
+        List<Reservation> reservationList = user.getReservationList();
+        if (reservationList == null) {
+            reservationList = new ArrayList<>();
+        }
+
+        reservationList.add(reservation);
+        user.setReservationList(reservationList);
+
+        List<Reservation> reservations = spotReq.getReservationList();
+        if (reservations == null) {
+            reservations = new ArrayList<>();
+        }
+        reservations.add(reservation);
+        spotReq.setReservationList(reservations);
 
         spotReq.setOccupied(true);
         userRepository3.save(user);
